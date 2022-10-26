@@ -48,7 +48,6 @@ public class TestMemberService {
 				System.out.println("바뀔 주소 입력");
 				addr=sc.next();
 				service.update(new MemberVO(id,name,tel,addr));
-				System.out.println("ddd");
 				break;
 			case 4:
 				System.out.println("삭제할 아이디 입력");
