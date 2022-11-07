@@ -1,0 +1,94 @@
+**review**
+JDBC Programming pattern
+1. Driver loading
+2. Connection
+3. Statement or PreparedStatement
+4. SQL 실행 - select : executeQuery() : ResultSet
+					- insert, delete, update : executeUpdate() : int
+5. select 일 경우 : ResultSet - next() : boolean
+												getString(1) or getInt(1)
+6. close()
+
+**계좌관리 시스템**
+고객은 통장(계좌)을 개설할 수 있다.
+개설시 필요한 정보는 계좌번호, 초기 납입금, 계좌주명이 필요하다.
+계좌번호로 계좌를 조회하면 계좌주명, 잔액 정보가 나온다.
+고객은 입금할 수 있고, 출금할 수 있다.
+고객은 다수의 계좌를 개설할 수 있다.
+고객명으로 계좌의 전체 총액 및 평균액을 조회할 수 있다.
+ 
+- 업무 정의 
+
+- db 설계 : table (column 정의)
+
+- class의 list 
+-업무정의
+
+
+- db 설계 : table (column 정의)
+db  이름 : BankVO
+accountNumber varchar2(50) primary key,
+accountName varchar2(40) not null,
+balance(50) number not null;
+
+
+
+
+- class list
+---- TestAccountDao 
+---- AccountDao (비즈니스 로직)     
+insertAccount    
+depositMoney                
+withDrawMoney                 
+findAccount                 
+avgAccount
+
+
+---- InvalidBalanceException 
+---- NotFoundAccountException 
+---- NotFoundNameException
+---- InsufficientMoneyException
+---- DuplicateAccountException 
+
+
+---- AccountVO
+String accountNumber
+String accountName
+int balance
+
+
+--세부 Exception        
+insertAccount : 객체
+-InsufficientMoneyException : 초기 입금액이 0원 이하 일때
+-NotFoundName : 고객명이 없을 시에
+-DuplicateAccountException : 이미 동일한 계좌가 생성되어 있습니다.
+System.out.println("계좌생성완료");
+
+
+depositMoney : String, int
+-InsufficientMoneyException : 0원 이하 입금시
+-NotFoundAccountException : 계좌가 없을 시
+System.out.println(int+" 가 입금 되었습니다.");
+메세지 리턴값 : int 
+
+
+withDrawMoney : String, int
+-InsufficientMoneyException : 0원 이하 출금시
+-InvalidBalanceException 잔액부족할 시에      
+-NotFoundAccountException : 계좌가 없을 시
+System.out.println(int+" 가 출금 되었습니다.");
+메세지 리턴값 : int 
+      
+findAccount : String
+-NotFoundAccountException : 계좌가 없을 시
+반환값 : 객체타입
+
+
+sumAccount : String
+-NotFoundName : 고객이 없을 시에
+리턴값 : int 
+
+
+avgAccount : String
+-NotFoundName : 고객이 없을 시에
+리턴값 : int 
