@@ -65,7 +65,7 @@ public class BoardDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				list.add(new BoardVO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5),
-						rs.getInt(6)));
+						rs.getInt(6), rs.getString(7)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,7 +77,7 @@ public class BoardDAO {
 
 	public void addBoard(BoardVO b) {
 		con();
-		sql = "INSERT INTO board1 VALUES(board_no.nextval,?,?,?,SYSDATE,?)";
+		sql = "INSERT INTO board1 VALUES(board_no.nextval,?,?,?,SYSDATE,?,?)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -85,6 +85,7 @@ public class BoardDAO {
 			pstmt.setString(2, b.getBoard_content());
 			pstmt.setString(3, b.getBoard_name());
 			pstmt.setInt(4, b.getBoard_count());
+			pstmt.setString(5, b.getBoard_img());
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -92,5 +93,27 @@ public class BoardDAO {
 		} finally {
 			discon();
 		}
+	}
+
+	public BoardVO getBoard(int board_num) {
+		BoardVO vo = null;
+		con();
+		sql = "SELECT * FROM board1 WHERE board_num=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				vo = new BoardVO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5),
+						rs.getInt(6), rs.getString(7));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			discon();
+		}
+
+		return vo;
 	}
 }

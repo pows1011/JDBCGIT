@@ -35,7 +35,7 @@ public class MemberCon extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String type = request.getParameter("type");
 		MemberService service = new MemberService();
-		String view = "board/";
+		String view = "blog/";
 		PrintWriter out = response.getWriter();
 
 		if (type.equals("insert")) {
@@ -50,22 +50,23 @@ public class MemberCon extends HttpServlet {
 		} else if (type.equals("login")) {
 			String id = request.getParameter("id");
 			String password = request.getParameter("password");
-			ArrayList<MemberVO> list = service.login(id, password);
-			if (list.isEmpty()) {
+			MemberVO vo = service.login(id, password);
+			if (vo==null) {
 				out.print("<script>");
 				out.print("alert('아이디 비밀번호가 틀렸습니다');");
 				out.print("</script>");
 				view += "login.jsp";
 			} else {
 				HttpSession session = request.getSession();
-				session.setAttribute("memlist", list);
-				view += "index.jsp";
+				session.setAttribute("id", id);
+				view += "Index.jsp";
 			}
 
 		} else if (type.equals("logout")) {
 			HttpSession session = request.getSession();
-			session.invalidate();
-			view += "index.jsp";
+			session.removeAttribute("id");
+			session.invalidate();			
+			view += "Index.jsp";			
 		}
 
 		RequestDispatcher dis = request.getRequestDispatcher(view);
