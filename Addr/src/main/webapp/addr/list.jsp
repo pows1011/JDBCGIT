@@ -8,7 +8,9 @@
 </head>
 <body>
 	<%
-	ArrayList<Member> list = (ArrayList<Member>) request.getAttribute("list");
+
+
+		ArrayList<MemberVO> list = (ArrayList<MemberVO>) request.getAttribute("list");
 	%>
 
 	<table>

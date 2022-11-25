@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.Member"%>
+	pageEncoding="UTF-8" import="model.MemberVO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +49,9 @@
 </head>
 <body>
 	<%
-	Member m = (Member) request.getAttribute("m");
+	p
+
+		MemberVO m = (MemberVO) request.getAttribute("m");
 	%>
 
 	<form action="<%=request.getContextPath()%>/control?type=edit" method="post">
